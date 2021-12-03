@@ -10,6 +10,30 @@ public class Day3 {
     ArrayList<String> consideringO2 = new ArrayList<>();
     ArrayList<String> consideringCO2 = new ArrayList<>();
 
+    public String[] part1(ArrayList<String> a) {
+        String[] gamandeps = new String[2];
+        String gamma = "";
+        String epsilon = "";
+        double total = 0;
+        double len = a.size();
+        for (int i = 0; i < 12; i++) {
+            for (String b : a) {
+                total += Integer.parseInt(String.valueOf(b.charAt(i)));
+            }
+            if (total / len >= 0.5) {
+                gamma += "1";
+                epsilon += "0";
+            } else {
+                gamma += "0";
+                epsilon += "1";
+            }
+            total = 0;
+        }
+        gamandeps[0] = gamma;
+        gamandeps[1] = epsilon;
+        return gamandeps;
+    }
+
     public ArrayList<String> considerNextInteger(ArrayList<String> a, int index, boolean most) {
         char common = '0';
         double len = a.size();
@@ -42,14 +66,15 @@ public class Day3 {
             reader = new BufferedReader(new FileReader(input));
             String line = reader.readLine();
             while (line != null) {
-                char[] parsing = line.toCharArray();
                 d.consideringCO2.add(line);
                 d.consideringO2.add(line);
-                for (i = 0; i < 12; i++) {
-                    numbers[i] += Integer.parseInt(String.valueOf(parsing[i]));
-                }
                 line = reader.readLine();
             }
+            String[] Part1 = d.part1(d.consideringO2);
+            System.out.println("The gamma value is: " + Part1[0]);
+            System.out.println("The epsilon value is: " + Part1[1]);
+            System.out.println("Those multiplied together (and thus the answer to part 1) is: " + Integer.parseInt(Part1[0], 2) * Integer.parseInt(Part1[1], 2));
+
             i = 0;
             while(d.consideringCO2.size() != 1) {
                 d.consideringCO2 = d.considerNextInteger(d.consideringCO2, i, false);
@@ -60,32 +85,12 @@ public class Day3 {
                 d.consideringO2 = d.considerNextInteger(d.consideringO2, i, true);
                 i++;
             }
-            System.out.println(d.consideringO2.get(0));
-            System.out.println(d.consideringCO2.get(0));
+
+            System.out.println("\nThe final oxygen generator rating is: " + d.consideringO2.get(0));
+            System.out.println("The final CO2 scrubber rating is: " + d.consideringCO2.get(0));
             int oxygen = Integer.parseInt(d.consideringO2.get(0), 2);
             int scrubber = Integer.parseInt(d.consideringCO2.get(0), 2);
-            System.out.println(oxygen);
-            System.out.println(scrubber);
-            System.out.println(oxygen * scrubber);
-            String gammas = "";
-            String epsilon = "";
-            for (int number : numbers) {
-                if (number > 500) {
-                    gammas += "1";
-                } else {
-                    gammas += "0";
-                }
-            }
-            for (int number : numbers) {
-                if (number > 500) {
-                    epsilon += "0";
-                } else {
-                    epsilon += "1";
-                }
-            }
-            int ep = Integer.parseInt(epsilon,2);
-            int gam = Integer.parseInt(gammas, 2);
-
+            System.out.println("Those multiplied together is: " + oxygen * scrubber);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
