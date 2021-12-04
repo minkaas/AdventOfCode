@@ -8,7 +8,7 @@ import java.io.IOException;
 public class Day6 {
     public static void main(String[] args) {
         BufferedReader reader;
-        File input = new File("src/Day5/input");
+        File input = new File("src/Day6/input");
         try {
             reader = new BufferedReader(new FileReader(input));
             String line = reader.readLine();
