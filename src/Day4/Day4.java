@@ -10,21 +10,21 @@ public class Day4 {
     public ArrayList<Integer> allNumbers = new ArrayList<>();
     public ArrayList<int[]> allBingos = new ArrayList<>();
 
-    public int checkBingo(int[] bingoCard, ArrayList<Integer> allNumbers) {
-        int[] foundNums = new int[25];
-        int result = allNumbers.size();
+    public int[] checkBingo(int[] bingoCard, ArrayList<Integer> allNumbers) {
+        int[] foundNums = new int[26];
         for (int i = 0; i < allNumbers.size(); i++) {
+            int num = allNumbers.get(i);
             for (int j = 0; j < 25; j++) {
-                if (bingoCard[j] == allNumbers.get(i)) {
+                if (bingoCard[j] == num) {
                     foundNums[j] = 1;
                 }
                 if (bingoFound(foundNums)) {
-                    result = i;
-                    return result;
+                    foundNums[25] = i;
+                    return foundNums;
                 }
             }
         }
-        return result;
+        return foundNums;
     }
 
     public boolean bingoFound(int[] foundBingos) {
@@ -57,16 +57,11 @@ public class Day4 {
         return res;
     }
 
-    public int calculateSum(int[] bingoCard, ArrayList<Integer> allNums, int howMany) {
+    public int calculateSum(int[] bingoCard, int[] foundNums) {
         int sum = 0;
-        for (int a : bingoCard) {
-            sum += a;
-        }
-        for (int i = 0; i <= howMany; i++) {
-            for (int j = 0; j < bingoCard.length; j++) {
-                if (bingoCard[j] == allNums.get(i)) {
-                    sum -= allNums.get(i);
-                }
+        for (int i = 0; i < bingoCard.length; i++) {
+            if (foundNums[i] == 0) {
+                sum += bingoCard[i];
             }
         }
         return sum;
@@ -96,9 +91,9 @@ public class Day4 {
                         String[] bingoCard = result.split(" ");
                         int[] bingo = new int[25];
                         int j = 0;
-                        for (int i = 0; i < bingoCard.length; i++) {
-                            if (!(bingoCard[i].equals(""))) {
-                                bingo[j] = Integer.parseInt(bingoCard[i]);
+                        for (String s : bingoCard) {
+                            if (!(s.equals(""))) {
+                                bingo[j] = Integer.parseInt(s);
                                 j++;
                             }
                         }
@@ -106,9 +101,6 @@ public class Day4 {
                         d.allBingos.add(bingo);
                     }
                 }
-                /**
-                 * Do some stuff here tomorrow
-                 */
                 line = reader.readLine();
             }
             String[] bingoCard = result.split(" ");
@@ -120,22 +112,21 @@ public class Day4 {
                     j++;
                 }
             }
-            result = "";
             d.allBingos.add(bingo);
             int least = 100;
             int[] winner = new int[25];
             for (int[] bingos : d.allBingos) {
-                int i = d.checkBingo(bingos, d.allNumbers);
-                if (i < least) {
+                int i = d.checkBingo(bingos, d.allNumbers)[25];
+                if (i <= least) {
                     winner = bingos;
                     least = i;
                 }
             }
             int lastNum = d.allNumbers.get(least);
-            int sum = d.calculateSum(winner, d.allNumbers, least);
-            System.out.println(sum);
-            System.out.println(lastNum);
-            System.out.println(sum * lastNum);
+            int sum = d.calculateSum(winner, d.checkBingo(winner, d.allNumbers));
+            System.out.println("The sum of the board is: " + sum);
+            System.out.println("The number that got you the win is: " + lastNum);
+            System.out.println("So the final result is: " + sum * lastNum);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
