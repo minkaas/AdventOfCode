@@ -30,7 +30,7 @@ public class Day4 {
     public boolean bingoFound(int[] foundBingos) {
         int result = 0;
         boolean res = false;
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 25; i = i + 5) {
             for (int j = 0; j < 5; j++) {
                 if (foundBingos[i+j] == 1) {
                     result++;
@@ -38,6 +38,7 @@ public class Day4 {
             }
             if (result == 5) {
                 res = true;
+                result = 0;
             } else {
                 result = 0;
             }
@@ -50,6 +51,7 @@ public class Day4 {
             }
             if (result == 5) {
                 res = true;
+                result = 0;
             } else {
                 result = 0;
             }
