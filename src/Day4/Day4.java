@@ -116,19 +116,30 @@ public class Day4 {
             }
             d.allBingos.add(bingo);
             int least = 100;
+            int most = 0;
             int[] winner = new int[25];
+            int[] loser = new int[25];
             for (int[] bingos : d.allBingos) {
                 int i = d.checkBingo(bingos, d.allNumbers)[25];
                 if (i <= least) {
                     winner = bingos;
                     least = i;
                 }
+                if (i >= most) {
+                    loser = bingos;
+                    most = i;
+                }
             }
-            int lastNum = d.allNumbers.get(least);
-            int sum = d.calculateSum(winner, d.checkBingo(winner, d.allNumbers));
-            System.out.println("The sum of the board is: " + sum);
-            System.out.println("The number that got you the win is: " + lastNum);
-            System.out.println("So the final result is: " + sum * lastNum);
+            int leastNum = d.allNumbers.get(least);
+            int mostNum = d.allNumbers.get(most);
+            int winningSum = d.calculateSum(winner, d.checkBingo(winner, d.allNumbers));
+            int losingSum = d.calculateSum(loser, d.checkBingo(loser, d.allNumbers));
+            System.out.println("The sum of the winning board is: " + winningSum);
+            System.out.println("The number that got you the win is: " + leastNum);
+            System.out.println("The sum of the losing board is: " + losingSum);
+            System.out.println("The number that got you the loss is: " + mostNum);
+            System.out.println("So the final winning result is: " + winningSum * leastNum);
+            System.out.println("So the final losing result is: " + losingSum * mostNum);
             reader.close();
         } catch (IOException e) {
             e.printStackTrace();
