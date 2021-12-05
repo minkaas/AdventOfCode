@@ -10,7 +10,7 @@ public class Day5 {
 
     public int testAllNums(int[][] array) {
         int result = 0;
-        for (int j = 0; j<array[0].length; j++) {
+        for (int j = 0; j < array[0].length; j++) {
             for (int i = 0; i < array.length; i++) {
                 if (array[i][j] > 1) {
                     result += 1;
