@@ -60,13 +60,13 @@ public class Day5 {
                         for (i = onex; i <= twox; i++) {
                             if (oney < twoy) {
                                 if (j <= twoy) {
-                                    d.allNums[i][j] += 1;
+                                    d.allNums[j][i] += 1;
                                     j++;
                                 }
                             }
                             else {
                                 if (j >= twoy) {
-                                    d.allNums[i][j] += 1;
+                                    d.allNums[j][i] += 1;
                                     j--;
                                 }
                             }
@@ -76,12 +76,12 @@ public class Day5 {
                         for (i = twox; i <= onex; i++) {
                             if (twoy > oney) {
                                 if (j >= oney) {
-                                    d.allNums[i][j] += 1;
+                                    d.allNums[j][i] += 1;
                                 }
                                 j--;
                             } else {
                                 if (j <= oney) {
-                                    d.allNums[i][j] += 1;
+                                    d.allNums[j][i] += 1;
                                 }
                                 j++;
                             }
