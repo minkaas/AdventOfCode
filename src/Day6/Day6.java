@@ -51,16 +51,6 @@ public class Day6 {
     public static void main(String[] args) {
         Day6 d = new Day6();
 
-        int zeroes = 0;
-        int ones = 0;
-        int twos = 0;
-        int threes = 0;
-        int fours = 0;
-        int fives = 0;
-        int sixes = 0;
-        int sevens = 0;
-        int eights = 0;
-
         BufferedReader reader;
         File input = new File("src/Day6/input");
         try {
@@ -71,37 +61,7 @@ public class Day6 {
                 for (String a : allNums) {
                     int k = Integer.parseInt(a);
                     d.fish.add(k);
-                    switch (k) {
-                        case 0 -> {
-                            zeroes++;
-                        } case 1 -> {
-                            ones++;
-                        } case 2 -> {
-                            twos++;
-                        } case 3 -> {
-                            threes++;
-                        } case 4 -> {
-                            fours++;
-                        } case 5 -> {
-                            fives++;
-                        } case 6 -> {
-                            sixes++;
-                        } case 7 -> {
-                            sevens++;
-                        } case 8 -> {
-                            eights++;
-                        }
-                    }
-                    d.totalFish[0] = zeroes;
-                    d.totalFish[1] = ones;
-                    d.totalFish[2] = twos;
-                    d.totalFish[3] = threes;
-                    d.totalFish[4] = fours;
-                    d.totalFish[5] = fives;
-                    d.totalFish[6] = sixes;
-                    d.totalFish[7] = sevens;
-                    d.totalFish[8] = eights;
-
+                    d.totalFish[k] += 1;
                 }
                 line = reader.readLine();
             }
