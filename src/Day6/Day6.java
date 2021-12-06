@@ -31,9 +31,7 @@ public class Day6 {
 
     public long[] iteratePart2(long[] totalFish) {
         long i = totalFish[0];
-        for (int j = 0; j < totalFish.length - 1; j++) {
-            totalFish[j] = totalFish[j+1];
-        }
+        System.arraycopy(totalFish, 1, totalFish, 0, totalFish.length - 1);
         totalFish[6] += i;
         totalFish[8] = i;
         return totalFish;
