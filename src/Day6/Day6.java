@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.LongStream;
 
 public class Day6 {
     ArrayList<Integer> fish = new ArrayList<>();
@@ -13,7 +15,6 @@ public class Day6 {
 
     public ArrayList<Integer> iteratePart1(ArrayList<Integer> fish) {
         int addedEights = 0;
-
         for (int j = 0; j < fish.size(); j++) {
             int a = fish.get(j);
             if (a == 0) {
@@ -39,15 +40,6 @@ public class Day6 {
         return totalFish;
     }
 
-    public long sum(long[] totalFish) {
-        long result = 0;
-        for (long a : totalFish) {
-            result += a;
-        }
-        return result;
-    }
-
-
     public static void main(String[] args) {
         Day6 d = new Day6();
 
@@ -72,6 +64,7 @@ public class Day6 {
         for (int i = 0; i < days; i++){
             d.totalFish = d.iteratePart2(d.totalFish);
         }
-        System.out.println(d.sum(d.totalFish));
+        long sum = LongStream.of(d.totalFish).sum();
+        System.out.println(sum);
     }
 }
