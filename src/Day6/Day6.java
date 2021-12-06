@@ -11,7 +11,7 @@ public class Day6 {
     long[] totalFish = new long[9];
     public static int days = 256;
 
-    public ArrayList<Integer> iterate(ArrayList<Integer> fish) {
+    public ArrayList<Integer> iteratePart1(ArrayList<Integer> fish) {
         int addedEights = 0;
 
         for (int j = 0; j < fish.size(); j++) {
@@ -29,7 +29,7 @@ public class Day6 {
         return fish;
     }
 
-    public long[] iterate2(long[] totalFish) {
+    public long[] iteratePart2(long[] totalFish) {
         long i = totalFish[0];
         for (int j = 0; j < totalFish.length - 1; j++) {
             totalFish[j] = totalFish[j+1];
@@ -70,7 +70,7 @@ public class Day6 {
             e.printStackTrace();
         }
         for (int i = 0; i < days; i++){
-            d.totalFish = d.iterate2(d.totalFish);
+            d.totalFish = d.iteratePart2(d.totalFish);
         }
         System.out.println(d.sum(d.totalFish));
     }
