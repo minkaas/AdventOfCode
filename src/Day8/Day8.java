@@ -89,7 +89,7 @@ public class Day8 {
                         result = false;
                     }
                 }
-                if (result == true) {
+                if (result) {
                     return i;
                 }
             }
