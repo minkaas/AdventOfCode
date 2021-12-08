@@ -1,15 +1,17 @@
-package Day9;
+package Day10;
+
+import Day9.Day9;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Day9 {
+public class Day10 {
     public static void main(String[] args) {
-        Day9 d = new Day9();
+        Day10 d = new Day10();
         BufferedReader reader;
-        File input = new File("src/Day9/input");
+        File input = new File("src/Day10/input");
         try {
             reader = new BufferedReader(new FileReader(input));
             String line = reader.readLine();
