@@ -1,25 +1,99 @@
 package Day9;
 
+import javax.lang.model.type.ArrayType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 public class Day9 {
     int[][] allPoints = new int[100][100];
-    ArrayList<int[]> uhhh = new ArrayList<>();
+    ArrayList<Integer> lowPoints = new ArrayList<>();
+    ArrayList<int[]> lowPointsCoords = new ArrayList<>();
 
-    public ArrayList<Integer> getLowPoints(int[][] points) {
-        int i = 0;
+    public ArrayList<Integer> getAllBasins(ArrayList<int[]> coords) {
         ArrayList<Integer> result = new ArrayList<>();
+
+        return result;
+    }
+
+    public ArrayList<int[]> recurse(int[] og) {
+        int i = og[0];
+        int j = og[1];
+        int down;
+        int up;
+        int left;
+        int right;
+        int current = allPoints[i][j];
+        ArrayList<int[]> result = new ArrayList<>();
+        result.add(new int[]{i, j});
+        if (i != 99) {
+            down = allPoints[i+1][j];
+            if (current < down && down != 9) {
+                result.addAll(recurse(new int[]{i+1, j}));
+            }
+        }
+        if (i!= 0) {
+            up = allPoints[i-1][j];
+            if (current < up && up != 9) {
+                result.addAll(recurse(new int[]{i-1, j}));
+            }
+        }
+        if (j != 0) {
+            left = allPoints[i][j-1];
+            if (current < left && left != 9) {
+                result.addAll(recurse(new int[]{i, j-1}));
+            }
+        }
+        if (j != 99) {
+            right = allPoints[i][j+1];
+            if (current < right && right != 9) {
+                result.addAll(recurse(new int[]{i, j+1}));
+            }
+        }
+        return result;
+    }
+
+    public ArrayList<Integer> findAllBasins(int[][] points) {
+        ArrayList<Integer> result = new ArrayList<Integer>();
+        for (int[] coords : lowPointsCoords) {
+            int i = coords[0];
+            int j = coords[1];
+            ArrayList<int[]> temp = recurse(new int[]{i, j});
+            ArrayList<int[]> temp2 = new ArrayList<>();
+            for (int[] arrays : temp) {
+                boolean te = true;
+                for (int[] arrays2 : temp2) {
+                    if (Arrays.equals(arrays, arrays2)) {
+                        te = false;
+                    }
+                }
+                if (te) {
+                    temp2.add(arrays);
+                }
+            }
+            result.add(temp2.size());
+        }
+        return result;
+    }
+
+
+    public ArrayList<int[]> getLowPoints(int[][] points) {
+        int i = 0;
+        ArrayList<int[]> result = new ArrayList<>();
         while (i < 100) {
             if (i == 0) {
                 if (points[i][0] < points[i][1] && points[i][0] < points[i + 1][0]) {
-                    result.add(points[i][0]);
+                    result.add(new int[]{i, 0});
+                    lowPoints.add(points[i][0]);
                 }
                 if (points[i][99] < points[i][98] && points[i][99] < points[i + 1][99]) {
-                    result.add(points[i][99]);
+                    result.add(new int[]{i, 99});
+                    lowPoints.add(points[i][99]);
                 }
                 for (int j = 1; j < 99; j++) {
                     int current = points[i][j];
@@ -27,16 +101,19 @@ public class Day9 {
                     int left = points[i][j - 1];
                     int right = points[i][j + 1];
                     if (current < under && current < left && current < right) {
-                        result.add(current);
+                        result.add(new int[]{i, j});
+                        lowPoints.add(current);
                     }
                 }
                 i++;
             } else if (i == 99) {
                 if (points[i][0] < points[i][1] && points[i][0] < points[i - 1][0]) {
-                    result.add(points[i][0]);
+                    result.add(new int[]{i, 0});
+                    lowPoints.add(points[i][0]);
                 }
                 if (points[i][99] < points[i][98] && points[i][99] < points[i - 1][99]) {
-                    result.add(points[i][99]);
+                    result.add(new int[]{i, 99});
+                    lowPoints.add(points[i][99]);
                 }
                 for (int j = 1; j < 99; j++) {
                     int current = points[i][j];
@@ -44,18 +121,21 @@ public class Day9 {
                     int left = points[i][j - 1];
                     int right = points[i][j + 1];
                     if (current < over && current < left && current < right) {
-                        result.add(current);
+                        result.add(new int[]{i, j});
+                        lowPoints.add(current);
                     }
                 }
                 i++;
             } else {
                 if (points[i][0] < points[i][1] && points[i][0] < points[i-1][0] &&
                 points[i][0] < points[i+1][0]) {
-                    result.add(points[i][0]);
+                    result.add(new int[]{i, 0});
+                    lowPoints.add(points[i][0]);
                 }
                 if (points[i][99] < points[i][98] && points[i][99] < points[i - 1][99] &&
                 points[i][99] < points[i+1][99]) {
-                    result.add(points[i][99]);
+                    result.add(new int[]{i, 99});
+                    lowPoints.add(points[i][99]);
                 }
                 for (int j = 1; j < 99; j++) {
                     int current = points[i][j];
@@ -64,7 +144,8 @@ public class Day9 {
                     int left = points[i][j - 1];
                     int right = points[i][j + 1];
                     if (current < over && current < left && current < right && current < under) {
-                        result.add(current);
+                        result.add(new int[]{i, j});
+                        lowPoints.add(current);
                     }
                 }
                 i++;
@@ -73,10 +154,6 @@ public class Day9 {
         return result;
     }
 
-    public ArrayList<Integer> findAllBasins(int[][] points) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
-        return result;
-    }
 
     public static void main(String[] args) {
         Day9 d = new Day9();
@@ -98,9 +175,15 @@ public class Day9 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ArrayList<Integer> lowPoints = d.getLowPoints(d.allPoints);
-        int sum = lowPoints.stream().mapToInt(a -> a + 1).sum();
-        System.out.println(lowPoints);
-        System.out.println(sum);
+        d.lowPointsCoords = d.getLowPoints(d.allPoints);
+        ArrayList<Integer> allBasins = d.findAllBasins(d.allPoints);
+        Collections.sort(allBasins);
+        Collections.reverse(allBasins);
+        int multiply = 1;
+        for (int p = 0; p < 3; p++) {
+            System.out.println(allBasins.get(p));
+            multiply = multiply*allBasins.get(p);
+        }
+        System.out.println(multiply);
     }
 }
