@@ -1,11 +1,9 @@
 package Day9;
 
-import javax.lang.model.type.ArrayType;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,12 +12,6 @@ public class Day9 {
     int[][] allPoints = new int[100][100];
     ArrayList<Integer> lowPoints = new ArrayList<>();
     ArrayList<int[]> lowPointsCoords = new ArrayList<>();
-
-    public ArrayList<Integer> getAllBasins(ArrayList<int[]> coords) {
-        ArrayList<Integer> result = new ArrayList<>();
-
-        return result;
-    }
 
     public ArrayList<int[]> recurse(int[] og) {
         int i = og[0];
@@ -58,8 +50,8 @@ public class Day9 {
         return result;
     }
 
-    public ArrayList<Integer> findAllBasins(int[][] points) {
-        ArrayList<Integer> result = new ArrayList<Integer>();
+    public ArrayList<Integer> findAllBasins() {
+        ArrayList<Integer> result = new ArrayList<>();
         for (int[] coords : lowPointsCoords) {
             int i = coords[0];
             int j = coords[1];
@@ -176,7 +168,7 @@ public class Day9 {
             e.printStackTrace();
         }
         d.lowPointsCoords = d.getLowPoints(d.allPoints);
-        ArrayList<Integer> allBasins = d.findAllBasins(d.allPoints);
+        ArrayList<Integer> allBasins = d.findAllBasins();
         Collections.sort(allBasins);
         Collections.reverse(allBasins);
         int multiply = 1;
