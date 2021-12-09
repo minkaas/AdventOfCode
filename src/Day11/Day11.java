@@ -1,13 +1,13 @@
-package Day10;
+package Day11;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Day10 {
+public class Day11 {
     public static void main(String[] args) {
-        Day10 d = new Day10();
+        Day11 d = new Day11();
         BufferedReader reader;
         File input = new File("src/Day10/input");
         try {
