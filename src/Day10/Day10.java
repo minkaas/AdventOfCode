@@ -10,10 +10,6 @@ import java.util.Collections;
 public class Day10 {
     char[][] allCharacters = new char[102][150];
 
-    // ): 3 points.
-    // ]: 57 points.
-    // }: 1197 points.
-    // >: 25137 points
     public long completionScore(char[] line) {
         long result = 0;
         ArrayList<Character> open = new ArrayList<>();
@@ -88,7 +84,6 @@ public class Day10 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        long result = 0;
         ArrayList<Long> scores = new ArrayList<>();
         for (char[] lines : d.allCharacters) {
             if (d.checkLine(lines)) {
