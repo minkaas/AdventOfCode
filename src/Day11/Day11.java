@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class Day11 {
     int[][] allOctopi = new int[10][10];
     ArrayList<int[]> explodedAt = new ArrayList<>();
-    int steps = 100;
+    int steps = 1000;
 
     public int oneStep() {
         int flashes = 0;
@@ -79,7 +79,7 @@ public class Day11 {
     public static void main(String[] args) {
         Day11 d = new Day11();
         BufferedReader reader;
-        File input = new File("src/Day11/input");
+        File input = new File("src/Day11/example");
         try {
             reader = new BufferedReader(new FileReader(input));
             String line = reader.readLine();
@@ -98,8 +98,13 @@ public class Day11 {
         }
         int sum = 0;
         for (int i = 0; i < d.steps; i++) {
-            sum += d.oneStep();
-            System.out.println(sum);
+            int flashes = d.oneStep();
+            sum += flashes;
+            if (flashes == 100) {
+                System.out.println(i);
+                System.out.println(d.allOctopi);
+            }
+            //System.out.println(sum);
         }
     }
 }
