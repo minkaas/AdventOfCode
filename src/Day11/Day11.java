@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class Day11 {
     int[][] allOctopi = new int[10][10];
     ArrayList<int[]> explodedAt = new ArrayList<>();
-    int steps = 1000;
+    int steps = 99;
 
     public int oneStep() {
         int flashes = 0;
@@ -97,14 +97,16 @@ public class Day11 {
             e.printStackTrace();
         }
         int sum = 0;
-        for (int i = 0; i < d.steps; i++) {
-            int flashes = d.oneStep();
+        int i = 0;
+        int flashes = 0;
+        while (flashes != 100) {
+            flashes = d.oneStep();
             sum += flashes;
-            if (flashes == 100) {
-                System.out.println(i);
-                System.out.println(d.allOctopi);
+            if (i == d.steps) {
+                System.out.println("Part 1: " + sum);
             }
-            //System.out.println(sum);
+            i++;
         }
+        System.out.println("Part 2: " + i);
     }
 }
