@@ -33,24 +33,14 @@ public class Day12 {
 
     public void analyzeConnections() {
         for (String[] a : allConnections) {
-            if (analyzedConnections.containsKey(a[0])) {
-                analyzedConnections.get(a[0]).add(a[1]);
-            } else {
-                ArrayList<String> temp = new ArrayList<>();
-                temp.add(a[1]);
-                analyzedConnections.put(a[0], temp);
-            }
-            if (analyzedConnections.containsKey(a[1])) {
-                analyzedConnections.get(a[1]).add(a[0]);
-            } else {
-                ArrayList<String> temp = new ArrayList<>();
-                temp.add(a[0]);
-                analyzedConnections.put(a[1], temp);
-            }
+            analyzedConnections.putIfAbsent(a[0], new ArrayList<>());
+            analyzedConnections.get(a[0]).add(a[1]);
+            analyzedConnections.putIfAbsent(a[1], new ArrayList<>());
+            analyzedConnections.get(a[1]).add(a[0]);
         }
     }
 
-    public void findPath(String current, ArrayList<String> path) {
+    public void findPathPart1(String current, ArrayList<String> path) {
         ArrayList<String> temp = new ArrayList<>(path);
         for (String b : analyzedConnections.get(current)) {
             if (!(b.equals("start"))) {
@@ -63,10 +53,34 @@ public class Day12 {
                     allPaths.add(temp1);
                 } else if (Character.isUpperCase(b.charAt(0))) {
                     temp.add(b);
-                    findPath(b, temp);
+                    findPathPart1(b, temp);
+                } else if (!(temp.contains(b))) {
+                    temp.add(b);
+                    findPathPart1(b, temp);
+                }
+                temp.clear();
+                temp.addAll(path);
+            }
+        }
+    }
+
+    public void findPathPart2(String current, ArrayList<String> path) {
+        ArrayList<String> temp = new ArrayList<>(path);
+        for (String b : analyzedConnections.get(current)) {
+            if (!(b.equals("start"))) {
+                if (b.equals("end")) {
+                    temp.add(b);
+                    String[] temp1 = new String[temp.size()];
+                    for (int i = 0; i < temp.size(); i++) {
+                        temp1[i] = temp.get(i);
+                    }
+                    allPaths.add(temp1);
+                } else if (Character.isUpperCase(b.charAt(0))) {
+                    temp.add(b);
+                    findPathPart2(b, temp);
                 } else if (!(smallVisitTwice(temp)) || !(temp.contains(b))) {
                     temp.add(b);
-                    findPath(b, temp);
+                    findPathPart2(b, temp);
                 }
                 temp.clear();
                 temp.addAll(path);
@@ -99,7 +113,10 @@ public class Day12 {
         d.analyzeConnections();
         ArrayList<String> path = new ArrayList<>();
         path.add("start");
-        d.findPath("start", path);
-        System.out.println(d.allPaths.size());
+        d.findPathPart1("start", path);
+        System.out.println("Part 1: " + d.allPaths.size());
+        d.allPaths.clear();
+        d.findPathPart2("start", path);
+        System.out.println("Part 2: " + d.allPaths.size());
     }
 }
