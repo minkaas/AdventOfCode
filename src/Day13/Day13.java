@@ -86,9 +86,15 @@ public class Day13 {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        int i = 0;
         while (!(d.folds.isEmpty())) {
             d.doFolds();
+            if (i==0) {
+                System.out.println("Part 1: " + d.countDots());
+            }
+            i++;
         }
+        System.out.println("Part 2:");
         System.out.println(d);
     }
 }
