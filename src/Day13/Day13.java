@@ -7,24 +7,24 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Day13 {
-    int coordsx = 1310;
-    int coordsy = 894;
-    int[][] coords = new int[coordsy+1][coordsx+1];
+    int coordsx = 0;
+    int coordsy = 0;
+    int[][] coords = new int[1500][1500];
     ArrayList<String> folds = new ArrayList<>();
 
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int y = 0; y <= coordsy; y++) {
             for (int x = 0; x <= coordsx; x++) {
-                if (coords[y][x] > 1) {
-                    result += "#";
+                if (coords[y][x] > 0) {
+                    result.append("| |");
                 } else {
-                    result += " ";
+                    result.append("   ");
                 }
             }
-            result += "\n";
+            result.append("\n");
         }
-        return result;
+        return result.toString();
     }
 
     public void doFolds() {
@@ -61,7 +61,7 @@ public class Day13 {
     public static void main(String[] args) {
         Day13 d = new Day13();
         BufferedReader reader;
-        File input = new File("src/Day13/input");
+        File input = new File("src/Day13/example");
         try {
             reader = new BufferedReader(new FileReader(input));
             String line = reader.readLine();
@@ -70,6 +70,8 @@ public class Day13 {
                 if (numbers.length == 2) {
                     int x = Integer.parseInt(numbers[0]);
                     int y = Integer.parseInt(numbers[1]);
+                    d.coordsy = Math.max(d.coordsy, y);
+                    d.coordsx = Math.max(d.coordsx, x);
                     d.coords[y][x] = 1;
                 } else {
                     String[] fold = line.split(" ");
@@ -82,15 +84,11 @@ public class Day13 {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        int i = 0;
+        d.doFolds();
+        System.out.println("Part 1: " + d.countDots());
         while (!(d.folds.isEmpty())) {
             d.doFolds();
-            if (i==0) {
-                System.out.println("Part 1: " + d.countDots());
-            }
-            i++;
         }
-        System.out.println("Part 2:");
-        System.out.println(d);
+        System.out.println("Part 2:\n" + d);
     }
 }
