@@ -7,10 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Day13 {
-    /**
-     * x = 1310
-     * y = 894
-     */
     int coordsx = 1310;
     int coordsy = 894;
     int[][] coords = new int[coordsy+1][coordsx+1];
