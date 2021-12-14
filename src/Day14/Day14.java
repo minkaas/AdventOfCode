@@ -10,8 +10,8 @@ import java.util.HashMap;
 
 public class Day14 {
     ArrayList<ArrayList<Integer>> pairs = new ArrayList<>();
+    ArrayList<Integer> lastPair = new ArrayList<>();
     long[] pairAmounts;
-    int last;
     HashMap<Integer, ArrayList<Integer>> possiblePairs = new HashMap<>();
     HashMap<ArrayList<Integer>, Integer> insertions = new HashMap<>();
     HashMap<String, Integer> numString = new HashMap<>();
@@ -31,11 +31,15 @@ public class Day14 {
                     pairAmounts[b]++;
                 }
             }
+            lastPair = a;
         }
     }
 
     public void doOneStep() {
         long[] result = new long[pairAmounts.length];
+        if (insertions.get(lastPair) != null) {
+            lastPair = new ArrayList<>(Arrays.asList(insertions.get(lastPair), lastPair.get(1)));
+        }
         for (int i = 0; i < pairAmounts.length; i++) {
             if (pairAmounts[i] != 0) {
                 ArrayList<Integer> a = possiblePairs.get(i);
@@ -60,10 +64,12 @@ public class Day14 {
         for (int i = 0; i < pairAmounts.length; i++) {
             if (pairAmounts[i] != 0) {
                 ArrayList<Integer> a = possiblePairs.get(i);
-                counts[a.get(0)] = counts[a.get(0)] + pairAmounts[i];
+                counts[a.get(0)] += pairAmounts[i];
+                if (a.equals(lastPair)) {
+                   counts[a.get(1)]++;
+                }
             }
         }
-        counts[last]++;
         long least = counts[0];
         long most = counts[0];
         for (int i = 0; i < counts.length; i++) {
@@ -94,7 +100,6 @@ public class Day14 {
                             d.numString.put(polymer[j], nums);
                             nums++;
                         }
-                        d.last = nums;
                     }
                     for (int j = 0; j < polymer.length - 1; j++) {
                         int one = d.numString.get(polymer[j]);
@@ -127,7 +132,7 @@ public class Day14 {
             e.printStackTrace();
         }
         d.possiblePairs();
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 10; i++) {
             d.doOneStep();
             System.out.println("Did step: " + (i + 1));
         }
